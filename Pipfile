@@ -8,6 +8,8 @@ django = "*"
 django-rest-framework = "*"
 Celery = "*"
 "psycopg2-binary" = "*"
+pytest = "*"
+pytest-django = "*"
 
 [dev-packages]
 
