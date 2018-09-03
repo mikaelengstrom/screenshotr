@@ -24,3 +24,4 @@ class Job(models.Model):
     [{url: "http://somescreeshot.url", image: null}, {url: "http://other.url", image: "https://staticpath/image.jpg"}]
     """
     urls = ArrayField(HStoreField())
+

@@ -12,6 +12,7 @@ pytest = "*"
 pytest-django = "*"
 django-celery-results = "*"
 mock = "*"
+imgkit = "*"
 
 [dev-packages]
 

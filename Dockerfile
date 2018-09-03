@@ -8,7 +8,7 @@ ADD Pipfile /app/
 ADD Pipfile.lock /app/
 ADD "docker-entrypoint.sh" /app/
 
-RUN apt-get update && apt-get install -y netcat
+RUN apt-get update && apt-get install -y netcat wkhtmltopdf xvfb
 
 RUN pip install pipenv
 RUN pipenv install

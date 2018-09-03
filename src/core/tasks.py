@@ -1,18 +1,21 @@
-from celery import group
+import imgkit
+
+from django.utils import timezone
+from django.utils.text import slugify
+from django.conf import settings
+
 from screenshotr.celery import app
-from .models import Job
-
-
-@app.task
-def handle_job(pk):
-    instance = Job.objects.get(pk=pk)
-
-    urls = [x['url'] for x in instance.urls]
-    images = group([crop_image.s(url) for url in urls])().get()
-
-    return [{"url": urls[i], "image": images[i]} for i in range(len(urls))]
 
 
 @app.task
 def crop_image(url):
-    return url
+    file_name = generate_file_name(url)
+    path = settings.MEDIA_ROOT + file_name
+
+    res = imgkit.from_url(url, path , options={'xvfb': ''})
+    if res:
+        return settings.MEDIA_URL + file_name
+
+
+def generate_file_name(url):
+    return slugify("{}-{}".format(url, timezone.now())) + '.jpg'
