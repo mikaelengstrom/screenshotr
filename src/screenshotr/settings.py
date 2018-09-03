@@ -82,9 +82,11 @@ WSGI_APPLICATION = 'screenshotr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'screenshotr',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'postgres',
+        'HOST': 'db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'PORT': '5432',
     }
 }
 

@@ -6,8 +6,8 @@ from celery import Celery
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'screenshotr.settings')
 
 app = Celery('screenshotr',
-             broker='amqp://',
-             backend='amqp://',
+             broker='amqp://rabbitmq',
+             backend='amqp://rabbitmq',
              include=['core.tasks'])
 
 # Optional configuration, see the application user guide.

@@ -1,0 +1,50 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+      - "./docker/files/shared:/shared:rw"
+      - "./docker/files/logs:/var/log:rw"
+      - "./src:/app/src:rw"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - rabbitmq
+
+  celery_worker_1:
+    build: .
+    volumes:
+      - "./docker/files/shared:/shared:rw"
+      - "./docker/files/logs:/var/log:rw"
+      - "./src:/app/src:rw"
+    depends_on:
+      - db
+      - rabbitmq
+    command: "celery_worker"
+
+  celery_worker_2:
+    build: .
+    volumes:
+      - "./docker/files/shared:/shared:rw"
+      - "./docker/files/logs:/var/log:rw"
+      - "./src:/app/src:rw"
+    depends_on:
+      - db
+      - rabbitmq
+    command: "celery_worker"
+
+  rabbitmq:
+    image: rabbitmq:3.7
+
+  db:
+    image: mdillon/postgis:9.6
+    ports:
+      - "8001:5432"
+    volumes:
+      - "./docker/files/db-dumps/:/docker-entrypoint-initdb.d/"
+      - "./docker/files/shared:/shared:rw"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
